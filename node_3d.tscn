@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://bo6qo3g466oxp"]
+
+[ext_resource type="Script" uid="uid://i7s5qmymyyqn" path="res://player.gd" id="1_a202f"]
+[ext_resource type="Script" uid="uid://daiawu8vioqft" path="res://game_camera.gd" id="1_noarx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4xowi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a202f"]
+albedo_color = Color(0.196078, 0, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4xowi"]
+material = SubResource("StandardMaterial3D_a202f")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a202f"]
+size = Vector3(20, 0.1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noarx"]
+albedo_color = Color(1, 0.211765, 0.239216, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_a202f"]
+material = SubResource("StandardMaterial3D_noarx")
+size = Vector2(20, 20)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="GameCamera" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
+transform = Transform3D(0.993236, 0.0677684, -0.0942888, 0.00813019, 0.769442, 0.638665, 0.115831, -0.635112, 0.763686, 0, 5, 5)
+current = true
+fov = 70.0
+far = 100.0
+script = ExtResource("1_noarx")
+target = NodePath("../Player")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_a202f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_4xowi")
+
+[node name="PlayerMesh" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_4xowi")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="GroundCollision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_a202f")
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_a202f")
