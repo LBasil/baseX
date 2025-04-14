@@ -5,7 +5,7 @@ const MAX_PLAYERS = 4
 var players = {}
 
 func _ready():
-	start_server()
+	pass
 
 func start_server():
 	var peer = ENetMultiplayerPeer.new()

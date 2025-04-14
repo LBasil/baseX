@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bo6qo3g466oxp"]
+[gd_scene load_steps=10 format=3 uid="uid://bo6qo3g466oxp"]
 
 [ext_resource type="Script" uid="uid://daiawu8vioqft" path="res://game_camera.gd" id="1_noarx"]
 [ext_resource type="Script" uid="uid://cc6idlhutewhj" path="res://network_manager.gd" id="2_noarx"]
+[ext_resource type="Script" uid="uid://bgqtkjdo65s04" path="res://network_ui.gd" id="3_a0tk4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a202f"]
 size = Vector3(20, 0.1, 20)
@@ -52,3 +53,27 @@ mesh = SubResource("BoxMesh_noarx")
 
 [node name="NetworkManager" type="Node" parent="."]
 script = ExtResource("2_noarx")
+
+[node name="NetworkUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_a0tk4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NetworkUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="IpInput" type="LineEdit" parent="NetworkUI/VBoxContainer"]
+layout_mode = 2
+text = "127.0.0.1"
+
+[node name="HostButton" type="Button" parent="NetworkUI/VBoxContainer"]
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="NetworkUI/VBoxContainer"]
+layout_mode = 2
+text = "Join"
