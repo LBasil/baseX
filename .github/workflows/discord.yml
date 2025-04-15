@@ -1,0 +1,19 @@
+name: Discord Webhook Notify
+
+on:
+  push:
+    branches:
+      - main  # Change si ta branche s'appelle différemment
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d "{\"content\": \"🟢 Nouveau push sur main par $GITHUB_ACTOR dans $GITHUB_REPOSITORY\"}" \
+               $DISCORD_WEBHOOK
