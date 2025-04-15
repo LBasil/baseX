@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5gg6frs748d5"]
+
+[ext_resource type="Script" uid="uid://b3efbugmxagif" path="res://wall.gd" id="1_xxgf6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_noarx"]
+size = Vector3(4, 3, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0tk4"]
+albedo_color = Color(0.923975, 0.938152, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_noarx"]
+material = SubResource("StandardMaterial3D_a0tk4")
+size = Vector3(4, 2, 0.5)
+
+[node name="Wall" type="StaticBody3D" node_paths=PackedStringArray("player", "camera")]
+script = ExtResource("1_xxgf6")
+player = NodePath("")
+camera = NodePath("")
+
+[node name="WallCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.133, 0.818, 0)
+shape = SubResource("BoxShape3D_noarx")
+
+[node name="WallMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_noarx")
