@@ -2,29 +2,37 @@ extends StaticBody3D
 
 var is_destroyed = false
 var original_position = Vector3()
+@export var player: Node3D  # Référence au joueur
+@export var interaction_distance = 3.0  # Distance max pour interagir (en unités)
 
 func _ready():
-	# Sauvegarder la position initiale du mur
 	original_position = global_transform.origin
 
 func _process(delta):
-	# Détecter l'action pour casser
-	if Input.is_action_just_pressed("destroy_wall") and not is_destroyed:
+	if not player:
+		print("Player not assigned!")
+		return
+	
+	# Calculer la distance entre le mur et le joueur
+	var distance_to_player = global_transform.origin.distance_to(player.global_transform.origin)
+	
+	# Casser le mur si assez près
+	if Input.is_action_just_pressed("destroy_wall") and not is_destroyed and distance_to_player < interaction_distance:
 		destroy_wall()
 	
-	# Détecter l'action pour reposer
-	if Input.is_action_just_pressed("rebuild_wall") and is_destroyed:
+	# Reconstruire le mur si assez près
+	if Input.is_action_just_pressed("rebuild_wall") and is_destroyed and distance_to_player < interaction_distance:
 		rebuild_wall()
 
 func destroy_wall():
-	# Cacher le mur et désactiver la collision
-	hide()  # Cache le MeshInstance3D
-	$WallCollision.disabled = true  # Désactive la collision
+	hide()
+	$WallCollision.disabled = true
 	is_destroyed = true
+	print("Wall destroyed!")
 
 func rebuild_wall():
-	# Réafficher le mur et réactiver la collision
-	show()  # Réaffiche le MeshInstance3D
-	$WallCollision.disabled = false  # Réactive la collision
-	global_transform.origin = original_position  # Repositionne au cas où
+	show()
+	$WallCollision.disabled = false
+	global_transform.origin = original_position
 	is_destroyed = false
+	print("Wall rebuilt!")
