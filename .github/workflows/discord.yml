@@ -3,7 +3,7 @@ name: Discord Webhook Notify
 on:
   push:
     branches:
-      - main  # Change si ta branche s'appelle différemment
+      - main
 
 jobs:
   notify:
@@ -13,7 +13,10 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
+          COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+          COMMIT_URL="https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
+          BRANCH_NAME=${GITHUB_REF##*/}
           curl -H "Content-Type: application/json" \
                -X POST \
-               -d "{\"content\": \"🟢 Nouveau push sur main par $GITHUB_ACTOR dans $GITHUB_REPOSITORY\"}" \
+               -d "{\"content\": \"🚀 Nouveau commit sur \`${BRANCH_NAME}\` par \`${GITHUB_ACTOR}\`:\n👉 [${COMMIT_MESSAGE}](${COMMIT_URL})\"}" \
                $DISCORD_WEBHOOK
