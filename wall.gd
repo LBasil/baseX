@@ -14,7 +14,6 @@ func _ready():
 
 func _process(delta):
 	if not player or not camera:
-		print("Player or camera not assigned!")
 		return
 	
 	var distance_to_player = global_transform.origin.distance_to(player.global_transform.origin)
@@ -53,9 +52,13 @@ func destroy_wall():
 	hide()
 	$WallCollision.disabled = true
 	is_destroyed = true
+	player.add_resources(1)  # Donne 1 ressource au joueur
 
 func rebuild_wall():
-	show()
-	$WallCollision.disabled = false
-	global_transform.origin = original_position
-	is_destroyed = false
+	if player.resources >= 1:  # Nécessite 1 ressource
+		show()
+		$WallCollision.disabled = false
+		global_transform.origin = original_position
+		is_destroyed = false
+		player.resources -= 1  # Consomme 1 ressource
+		print("Wall rebuilt, resources left:", player.resources)

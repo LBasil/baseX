@@ -1,37 +1,26 @@
 extends CharacterBody3D
 
-# Vitesse et accélération du personnage
-@export var speed = 5.0
-@export var acceleration = 10.0
+var speed = 5.0
+var resources = 0  # Inventaire pour stocker les ressources
 
 func _physics_process(delta):
-	# Obtenir les entrées (pour tester avec clavier ou joystick plus tard)
-	var input_vector = Vector2.ZERO
-	input_vector.x = Input.get_axis("left", "right")
-	input_vector.y = Input.get_axis("up", "down")
+	# Mouvement existant
+	var input_dir = Vector2.ZERO
+	if Input.is_action_pressed("up"):
+		input_dir.y -= 1
+	if Input.is_action_pressed("down"):
+		input_dir.y += 1
+	if Input.is_action_pressed("left"):
+		input_dir.x -= 1
+	if Input.is_action_pressed("right"):
+		input_dir.x += 1
 	
-	# Normaliser pour éviter une vitesse excessive en diagonale
-	if input_vector.length() > 1.0:
-		input_vector = input_vector.normalized()
+	input_dir = input_dir.normalized()
+	var direction = Vector3(input_dir.x, 0, input_dir.y)
 	
-	# Convertir l'entrée 2D en mouvement 3D
-	var direction = Vector3(input_vector.x, 0, input_vector.y).normalized()
-	
-	# Appliquer le mouvement
-	if direction:
-		velocity.x = lerp(velocity.x, direction.x * speed, acceleration * delta)
-		velocity.z = lerp(velocity.z, direction.z * speed, acceleration * delta)
-		# Faire pivoter le personnage dans la direction du mouvement
-		if velocity.length() > 0.1:
-			rotation.y = lerp_angle(rotation.y, atan2(velocity.x, velocity.z), 10.0 * delta)
-	else:
-		# Ralentir quand il n'y a pas d'entrée
-		velocity.x = lerp(velocity.x, 0.0, acceleration * delta)
-		velocity.z = lerp(velocity.z, 0.0, acceleration * delta)
-	
-	# Appliquer la gravité
-	if not is_on_floor():
-		velocity.y -= 9.8 * delta
-	
-	# Déplacer le personnage
+	velocity = direction * speed
 	move_and_slide()
+
+func add_resources(amount):
+	resources += amount
+	print("Resources:", resources)  # Débogage temporaire

@@ -1,8 +1,25 @@
+<<<<<<< Updated upstream
 [gd_scene load_steps=10 format=3 uid="uid://bo6qo3g466oxp"]
 
 [ext_resource type="Script" uid="uid://i7s5qmymyyqn" path="res://player.gd" id="1_a202f"]
 [ext_resource type="Script" uid="uid://daiawu8vioqft" path="res://game_camera.gd" id="1_noarx"]
 [ext_resource type="PackedScene" uid="uid://c5gg6frs748d5" path="res://wall.tscn" id="3_a0tk4"]
+=======
+<<<<<<< Updated upstream
+[gd_scene load_steps=13 format=3 uid="uid://bo6qo3g466oxp"]
+
+[ext_resource type="Script" uid="uid://i7s5qmymyyqn" path="res://player.gd" id="1_a202f"]
+[ext_resource type="Script" uid="uid://daiawu8vioqft" path="res://game_camera.gd" id="1_noarx"]
+[ext_resource type="Script" uid="uid://b3efbugmxagif" path="res://wall.gd" id="3_a0tk4"]
+=======
+[gd_scene load_steps=11 format=3 uid="uid://bo6qo3g466oxp"]
+
+[ext_resource type="Script" uid="uid://i7s5qmymyyqn" path="res://player.gd" id="1_a202f"]
+[ext_resource type="Script" uid="uid://daiawu8vioqft" path="res://game_camera.gd" id="1_noarx"]
+[ext_resource type="PackedScene" uid="uid://c5gg6frs748d5" path="res://wall.tscn" id="3_a0tk4"]
+[ext_resource type="Script" uid="uid://cyvyi5sjfabvw" path="res://ui.gd" id="4_r3fl7"]
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4xowi"]
 
@@ -57,7 +74,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.689, 1, -1.385)
 player = NodePath("../../Player")
 camera = NodePath("../../GameCamera")
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+[node name="WallMesh" type="MeshInstance3D" parent="Wall"]
+mesh = SubResource("BoxMesh_noarx")
+=======
+>>>>>>> Stashed changes
 [node name="Wall2" parent="Walls" node_paths=PackedStringArray("player", "camera") instance=ExtResource("3_a0tk4")]
 transform = Transform3D(0.55643, 0.260825, -0.788896, -0.0079846, 0.951088, 0.308818, 0.830857, -0.165536, 0.531296, -4.89, 1, -0.264)
 player = NodePath("../../Player")
 camera = NodePath("../../GameCamera")
+<<<<<<< Updated upstream
+=======
+
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("player")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_r3fl7")
+player = NodePath("../Player")
+
+[node name="ResourceLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 50.0
+text = "Resources: 0"
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes

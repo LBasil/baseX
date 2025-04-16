@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="BaseX"
-run/main_scene="uid://bo6qo3g466oxp"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
