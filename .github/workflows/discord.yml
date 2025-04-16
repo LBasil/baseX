@@ -9,6 +9,9 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Notify Discord
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
@@ -16,7 +19,40 @@ jobs:
           COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
           COMMIT_URL="https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
           BRANCH_NAME=${GITHUB_REF##*/}
+          AUTHOR=${GITHUB_ACTOR}
+          AVATAR_URL="https://github.com/${GITHUB_ACTOR}.png"
+          REPO_URL="https://github.com/${GITHUB_REPOSITORY}"
+
+          PAYLOAD=$(cat <<EOF
+{
+  "embeds": [
+    {
+      "title": "🚀 Nouveau commit sur ${BRANCH_NAME}",
+      "url": "${COMMIT_URL}",
+      "color": 5814783,
+      "author": {
+        "name": "${AUTHOR}",
+        "url": "${REPO_URL}",
+        "icon_url": "${AVATAR_URL}"
+      },
+      "fields": [
+        {
+          "name": "Message",
+          "value": "${COMMIT_MESSAGE}",
+          "inline": false
+        }
+      ],
+      "footer": {
+        "text": "${GITHUB_REPOSITORY}"
+      },
+      "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+    }
+  ]
+}
+EOF
+)
+
           curl -H "Content-Type: application/json" \
                -X POST \
-               -d "{\"content\": \"🚀 Nouveau commit sur \`${BRANCH_NAME}\` par \`${GITHUB_ACTOR}\`:\n👉 [${COMMIT_MESSAGE}](${COMMIT_URL})\"}" \
+               -d "${PAYLOAD}" \
                $DISCORD_WEBHOOK
