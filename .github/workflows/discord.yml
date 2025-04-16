@@ -22,37 +22,9 @@ jobs:
           AUTHOR=${GITHUB_ACTOR}
           AVATAR_URL="https://github.com/${GITHUB_ACTOR}.png"
           REPO_URL="https://github.com/${GITHUB_REPOSITORY}"
-
-          PAYLOAD=$(cat <<EOF
-{
-  "embeds": [
-    {
-      "title": "🚀 Nouveau commit sur ${BRANCH_NAME}",
-      "url": "${COMMIT_URL}",
-      "color": 5814783,
-      "author": {
-        "name": "${AUTHOR}",
-        "url": "${REPO_URL}",
-        "icon_url": "${AVATAR_URL}"
-      },
-      "fields": [
-        {
-          "name": "Message",
-          "value": "${COMMIT_MESSAGE}",
-          "inline": false
-        }
-      ],
-      "footer": {
-        "text": "${GITHUB_REPOSITORY}"
-      },
-      "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-    }
-  ]
-}
-EOF
-)
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 
           curl -H "Content-Type: application/json" \
                -X POST \
-               -d "${PAYLOAD}" \
+               -d "{\"embeds\":[{\"title\":\"🚀 Nouveau commit sur ${BRANCH_NAME}\",\"url\":\"${COMMIT_URL}\",\"color\":5814783,\"author\":{\"name\":\"${AUTHOR}\",\"url\":\"${REPO_URL}\",\"icon_url\":\"${AVATAR_URL}\"},\"fields\":[{\"name\":\"Message\",\"value\":\"${COMMIT_MESSAGE}\"}],\"footer\":{\"text\":\"${GITHUB_REPOSITORY}\"},\"timestamp\":\"${TIMESTAMP}\"}]}" \
                $DISCORD_WEBHOOK
