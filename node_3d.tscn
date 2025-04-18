@@ -1,25 +1,11 @@
-<<<<<<< Updated upstream
-[gd_scene load_steps=10 format=3 uid="uid://bo6qo3g466oxp"]
-
-[ext_resource type="Script" uid="uid://i7s5qmymyyqn" path="res://player.gd" id="1_a202f"]
-[ext_resource type="Script" uid="uid://daiawu8vioqft" path="res://game_camera.gd" id="1_noarx"]
-[ext_resource type="PackedScene" uid="uid://c5gg6frs748d5" path="res://wall.tscn" id="3_a0tk4"]
-=======
-<<<<<<< Updated upstream
-[gd_scene load_steps=13 format=3 uid="uid://bo6qo3g466oxp"]
-
-[ext_resource type="Script" uid="uid://i7s5qmymyyqn" path="res://player.gd" id="1_a202f"]
-[ext_resource type="Script" uid="uid://daiawu8vioqft" path="res://game_camera.gd" id="1_noarx"]
-[ext_resource type="Script" uid="uid://b3efbugmxagif" path="res://wall.gd" id="3_a0tk4"]
-=======
-[gd_scene load_steps=11 format=3 uid="uid://bo6qo3g466oxp"]
+[gd_scene load_steps=14 format=3 uid="uid://npognrwapjag"]
 
 [ext_resource type="Script" uid="uid://i7s5qmymyyqn" path="res://player.gd" id="1_a202f"]
 [ext_resource type="Script" uid="uid://daiawu8vioqft" path="res://game_camera.gd" id="1_noarx"]
 [ext_resource type="PackedScene" uid="uid://c5gg6frs748d5" path="res://wall.tscn" id="3_a0tk4"]
 [ext_resource type="Script" uid="uid://cyvyi5sjfabvw" path="res://ui.gd" id="4_r3fl7"]
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+[ext_resource type="Script" uid="uid://bwvd3ovkui2gy" path="res://tree.gd" id="5_i5arm"]
+[ext_resource type="ArrayMesh" uid="uid://dpqp1b38il8ou" path="res://assets/tree_tall.obj" id="5_jka67"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4xowi"]
 
@@ -38,6 +24,9 @@ albedo_color = Color(1, 0.211765, 0.239216, 1)
 [sub_resource type="PlaneMesh" id="PlaneMesh_a202f"]
 material = SubResource("StandardMaterial3D_noarx")
 size = Vector2(20, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jka67"]
+size = Vector3(0.5, 3, 0.5)
 
 [node name="Node3D" type="Node3D"]
 
@@ -74,19 +63,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.689, 1, -1.385)
 player = NodePath("../../Player")
 camera = NodePath("../../GameCamera")
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-[node name="WallMesh" type="MeshInstance3D" parent="Wall"]
-mesh = SubResource("BoxMesh_noarx")
-=======
->>>>>>> Stashed changes
 [node name="Wall2" parent="Walls" node_paths=PackedStringArray("player", "camera") instance=ExtResource("3_a0tk4")]
 transform = Transform3D(0.55643, 0.260825, -0.788896, -0.0079846, 0.951088, 0.308818, 0.830857, -0.165536, 0.531296, -4.89, 1, -0.264)
 player = NodePath("../../Player")
 camera = NodePath("../../GameCamera")
-<<<<<<< Updated upstream
-=======
 
 [node name="UI" type="Control" parent="." node_paths=PackedStringArray("player")]
 layout_mode = 3
@@ -101,5 +81,16 @@ layout_mode = 0
 offset_right = 200.0
 offset_bottom = 50.0
 text = "Resources: 0"
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
+[node name="Tree" type="StaticBody3D" parent="." node_paths=PackedStringArray("player", "camera")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 4, 1, 5)
+script = ExtResource("5_i5arm")
+player = NodePath("../Player")
+camera = NodePath("../GameCamera")
+
+[node name="TreeMesh" type="MeshInstance3D" parent="Tree"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.327924, 0)
+mesh = ExtResource("5_jka67")
+
+[node name="TreeCollision" type="CollisionShape3D" parent="Tree"]
+shape = SubResource("BoxShape3D_jka67")
